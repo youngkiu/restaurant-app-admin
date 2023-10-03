@@ -1,2 +1,3 @@
 declare let count: number;
-declare const counterButton: HTMLButtonElement;
+declare const getThumbnailsButton: HTMLButtonElement;
+declare const thumbnailListDiv: HTMLButtonElement;

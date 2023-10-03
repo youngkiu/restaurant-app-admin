@@ -1,7 +1,8 @@
 let count = 1;
 
-const counterButton = document.getElementById("counter") as HTMLButtonElement;
+const getThumbnailsButton = document.getElementById("get-thumbnails-button") as HTMLButtonElement;
+const thumbnailListDiv = document.getElementById("thumbnails-div") as HTMLButtonElement;
 
-counterButton.addEventListener("click", () => {
-  counterButton.innerText  = `Click: ${count++}`;
+getThumbnailsButton.addEventListener("click", () => {
+  thumbnailListDiv.innerText  = `Click: ${count++}`;
 })
