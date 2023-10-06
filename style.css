@@ -4,8 +4,8 @@ a:active { color:#5C615E; }
 a:hover { color:#B2B3B4; }
 #table_1590382d th { border: 0px solid #8C8C8C;  }
 #table_1590382d td { border: 0px solid #8C8C8C;  }
-#table_64225efd th { border: 1px solid #8C8C8C;  }
-#table_64225efd td { border: 1px solid #8C8C8C;  }
+#table_64225efd th { border: 0px solid #8C8C8C;  }
+#table_64225efd td { border: 0px solid #8C8C8C;  }
 body { background-color:#FFFFFF; padding:0;  margin: 0; }
 .textstyle1 { text-align:left; }
 .ulstyle1 { margin:0; font-size: 12pt; color:#000000;  }
@@ -41,4 +41,4 @@ body { background-color:#FFFFFF; padding:0;  margin: 0; }
 #img_5413056b { vertical-align: bottom; position:relative; display: inline-block; width:300px; background:none; height:auto;  }
 #radiobutton_5b5d7ea1 { vertical-align: top; position:relative; display: inline-block; width:20px; height:20px;  }
 #img_49b26a41 { vertical-align: bottom; position:relative; display: inline-block; width:300px; background:none; height:auto;  }
-#button_36e1e858 { vertical-align: bottom; position:relative; display: inline-block; width:100%; height:30px; font-size:12pt; font-family:Arial, Helvetica, sans-serif; color:#000000;  }
+#button_36e1e858 { vertical-align: bottom; position:relative; display: inline-block; width:100%; height:30px; font-size:12pt; font-family:Arial, Helvetica, sans-serif;  }

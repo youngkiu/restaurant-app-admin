@@ -1,3 +1,1 @@
-declare let count: number;
-declare const getThumbnailsButton: HTMLButtonElement;
-declare const thumbnailListDiv: HTMLButtonElement;
+export declare function getAccessToken(url: string, options?: RequestInit): void;
