@@ -1,52 +1,148 @@
-<!-- https://gist.github.com/ahmetgeymen/a9dcd656a1527f6c73d9c712ea2d9d7e -->
-
-<!--
-MIT License
-
-Copyright (c) 2019 Aaron Parecki
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
--->
-
+<!DOCTYPE html>
 <html>
 <head>
-    <title>OAuth Authorization Code + PKCE in Vanilla JS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="RocketCake">
+    <title>맛도리지도</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-
 <body>
-<div class="flex-center full-height">
-    <div class="content">
-        <a href="#" id="start">Click to Sign In</a>
-        <div id="token" class="hidden">
-            <h2>Access Token</h2>
-            <div id="access_token" class="code"></div>
+<div class="textstyle1">
+    <ul id="ul_67883280" class="ulstyle1">
+        <li><span class="textstyle2">Login</span></li>
+        <ul id="ul_9022bbf" class="ulstyle2">
+            <li><span class="textstyle2"><a href="https://www.instagram.com/accounts/login/"
+                                            target="_blank">Instagram</a></span><span class="textstyle2"></span></li>
+            <li><span class="textstyle2"><a
+                    href="https://kauth.kakao.com/oauth/authorize?scope=account_email&response_type=code&client_id=5311f75d597994c45e3a86d82f7d42f3&redirect_uri=https://youngkiu.github.io/restaurant-app-admin">Kakao</a></span><span
+                    class="textstyle2"> </span></li>
+            <li><span class="textstyle2"><a
+                    href="https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.profile%20https%3A//www.googleapis.com/auth/userinfo.email&access_type=offline&include_granted_scopes=true&response_type=code&redirect_uri=https://youngkiu.github.io/restaurant-app-admin&client_id=3654988570-qphfeevvvtnvjpp1bn1unrho6pnb7rtv.apps.googleusercontent.com">Google</a></span><span
+                    class="textstyle2"></span></li>
+            <li><span class="textstyle2"><a
+                    href="https://appleid.apple.com/auth/authorize?client_id=com.youngkiu.map&redirect_uri=https://youngkiu.github.io/restaurant-app-admin&response_type=code%20id_token&state=state&scope=name%20email&response_mode=form_post">Apple</a></span><span
+                    class="textstyle2"></span></li>
+        </ul>
+        <button onclick="getAccessToken()">Click Me</button>
+    </ul>
+    <span class="textstyle2"> <br/></span>
+    <form action="https://map-app-api-6401d8bc45e7.herokuapp.com/place/restaurant"
+          enctype="application/x-www-form-urlencoded"
+          method="POST" id="form_8a90a61">
+        <div id="form_8a90a61_padding">
+            <div class="textstyle1">
+                <table id="table_1590382d" cellpadding="3" cellspacing="1">
+                    <tr>
+                        <td width="100px" height="30px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_103b5c73">
+                                <div class="textstyle1">
+                                    <span class="textstyle2">Date</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="100%" height="30px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_2c7116ea">
+                                <div class="textstyle1">
+                                    <input type="text" value="" title="" name="TextEdit1" id="edit_2823f0b8">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100px" height="30px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_71037a78">
+                                <div class="textstyle1">
+                                    <span class="textstyle2">Name</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="100%" height="30px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_3ecdb7db">
+                                <div class="textstyle1">
+                                    <input type="text" value="" title="" name="TextEdit2" id="edit_53d841d1">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100px" height="30px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_6322fe62">
+                                <div class="textstyle1">
+                                    <span class="textstyle2">Address</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="100%" height="30px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_495230ef">
+                                <div class="textstyle1">
+                                    <input type="text" value="" title="" name="TextEdit3" id="edit_1ce2b571">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100px" height="30px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_743390a2">
+                                <div class="textstyle1">
+                                    <span class="textstyle2">SNS Link</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="100%" height="30px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_6d2dd433">
+                                <div class="textstyle1">
+                                    <table id="table_64225efd" cellpadding="3" cellspacing="1">
+                                        <tr>
+                                            <td width="100%" height="30px"
+                                                style="vertical-align: center; overflow:hidden; ">
+                                                <div id="cell_27dba1b5">
+                                                    <div class="textstyle1">
+                                                        <input type="text" value="" title="" name="TextEdit4" id="edit_145e5370">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td width="110px" height="30px" style="vertical-align: center; overflow:hidden; ">
+                                                <div id="cell_b53fb0b">
+                                                    <div class="textstyle1">
+                                                        <button type="button" id="get-thumbnails-button">Get thumbnails</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100px" height="60px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_28d8ef31">
+                                <div class="textstyle1">
+                                    <span class="textstyle2">Thumbnails</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="100%" height="60px" style="vertical-align: center; overflow:hidden; ">
+                            <div id="cell_4f98b62">
+                                <div class="textstyle1">
+                                    <div id="thumbnails-div"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <span class="textstyle2"><br/></span>
+                <input name="Button1" type="submit" value="Register" title="" id="button_36e1e858">
+                <span class="textstyle2"><br/></span>
+            </div>
+            <div style="clear:both"></div>
         </div>
-        <div id="error" class="hidden">
-            <h2>Error</h2>
-            <div id="error_details" class="code"></div>
-        </div>
-    </div>
+    </form>
+
+    <!--https://sametcelikbicak.com/html-css-typescript-->
+    <!--http://yoonbumtae.com/?p=4367-->
+    <script type="text/javascript" src="./lib/code_token.js"></script>
 </div>
-
-<script src="./oauth.js"></script>
 </body>
-
 </html>
