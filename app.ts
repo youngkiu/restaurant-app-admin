@@ -22,15 +22,6 @@ document.getElementById('google')?.addEventListener('click', async function(e){
   window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.profile%20https%3A//www.googleapis.com/auth/userinfo.email&access_type=offline&include_granted_scopes=true&response_type=code&redirect_uri=${process.env.FRONT_END_URL}&client_id=3654988570-qphfeevvvtnvjpp1bn1unrho6pnb7rtv.apps.googleusercontent.com`;
 });
 
-document.getElementById('apple')?.addEventListener('click', async function(e){
-  e.preventDefault();
-
-  localStorage.setItem('oauth_provider', 'apple');
-
-  // Redirect to the authorization server
-  window.location.href = `https://appleid.apple.com/auth/authorize?client_id=com.youngkiu.map&redirect_uri=${process.env.FRONT_END_URL}&response_type=code%20id_token&state=state&scope=name%20email&response_mode=form_post`;
-});
-
 const url = new URL(window.location.href);
 const code = url.searchParams.get('code');
 console.log({ code });
