@@ -22,15 +22,22 @@ document.getElementById('google')?.addEventListener('click', async function(e){
   window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.profile%20https%3A//www.googleapis.com/auth/userinfo.email&access_type=offline&include_granted_scopes=true&response_type=code&redirect_uri=${process.env.FRONT_END_URL}&client_id=3654988570-qphfeevvvtnvjpp1bn1unrho6pnb7rtv.apps.googleusercontent.com`;
 });
 
+const updateRegisterButton = () => {
+  const accessToken = localStorage.getItem('access_token');
+  const registerButton = document.getElementById('button_36e1e858') as HTMLButtonElement;
+
+  registerButton.disabled = !accessToken;
+}
+
 const url = new URL(window.location.href);
 const code = url.searchParams.get('code');
 console.log({ code });
 
 if (code) {
-  const oauth_provider = localStorage.getItem('oauth_provider');
+  const oauthProvider = localStorage.getItem('oauth_provider');
 
   const request = new XMLHttpRequest();
-  request.open('GET', `${process.env.BACK_END_URL}/auth/${oauth_provider}/callback?code=${code}`, true);
+  request.open('GET', `${process.env.BACK_END_URL}/auth/${oauthProvider}/callback?code=${code}`, true);
   request.onload = function () {
     let body = {
       access_token: ''
@@ -49,10 +56,16 @@ if (code) {
       console.error(request, body);
     }
 
+    updateRegisterButton();
+
     window.history.replaceState({}, '', `${process.env.FRONT_END_URL}`);
   }
   request.onerror = function () {
     console.error(request, {});
   }
   request.send();
+} else {
+  updateRegisterButton();
 }
+
+
