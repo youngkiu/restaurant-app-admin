@@ -1,9 +1,6 @@
 import 'dotenv/config'
+import axios from 'axios';
 
-//////////////////////////////////////////////////////////////////////
-// OAUTH REQUEST
-
-// Initiate the Auth Code flow when the link is clicked
 document.getElementById('kakao')?.addEventListener('click', async function(e){
   e.preventDefault();
 
@@ -28,6 +25,66 @@ const updateRegisterButton = () => {
 
   registerButton.disabled = !accessToken;
 }
+
+document.getElementById('form_8a90a61')?.addEventListener('submit', async function(e){
+  e.preventDefault();
+
+  const accessToken = localStorage.getItem('access_token');
+  if (!accessToken) console.error('No access_token');
+
+  const registerForm =    document.getElementById('form_8a90a61') as HTMLFormElement;
+
+  const formData = new FormData(registerForm);
+
+  const response = await axios.post(`${process.env.BACK_END_URL}/place/restaurant`, formData, {
+    headers: {
+      authorization: `Bearer ${accessToken}`
+    },
+    validateStatus: () => true
+  });
+  console.log(response);
+
+  if (response.status === 401) {
+    localStorage.removeItem('access_token');
+    updateRegisterButton();
+  }
+});
+
+const getThumbnailsButton = document.getElementById('get-thumbnails-button') as HTMLButtonElement;
+getThumbnailsButton.disabled = true;
+document.getElementById('edit_145e5370')?.addEventListener('change', async function(e){
+  e.preventDefault();
+
+  if (e.target instanceof HTMLInputElement) {
+    getThumbnailsButton.disabled = !e.target.value
+  }
+});
+
+document.getElementById('get-thumbnails-button')?.addEventListener('click', async function(e){
+  e.preventDefault();
+
+  const accessToken = localStorage.getItem('access_token');
+  if (!accessToken) console.error('No access_token');
+
+  const snsLink = document.getElementById('edit_145e5370') as HTMLInputElement;
+  const snsUri = snsLink.value;
+  console.log(snsUri);
+
+  const response = await axios.post(`${process.env.BACK_END_URL}/place/restaurant/thumbnail`, { snsUri, snsProvider: 'naver' }, {
+    headers: {
+      authorization: `Bearer ${accessToken}`
+    },
+    validateStatus: () => true
+  });
+
+  if (response.status === 401) {
+    localStorage.removeItem('access_token');
+    updateRegisterButton();
+  }
+
+  const thumbnails = document.getElementById('thumbnails-div') as HTMLDivElement;
+  thumbnails.innerHTML = response.data.map((imgSrc: string, i: number) => `<img referrerpolicy="no-referrer" src="${imgSrc}?type=w966" width=30% alt="thumbnail${i}"> <input type='radio' name='thumbnail' value='imgSrc' /> ${i}`).join('<br>');
+});
 
 const url = new URL(window.location.href);
 const code = url.searchParams.get('code');
