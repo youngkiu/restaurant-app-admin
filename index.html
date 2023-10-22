@@ -6,6 +6,7 @@
     <meta name="generator" content="RocketCake">
     <title>맛도리지도</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="spinkit.css">
 </head>
 <body>
 <div class="textstyle1">
@@ -24,8 +25,24 @@
             <div class="textstyle1">
                 <table id="table_1590382d" cellpadding="3" cellspacing="1">
                     <tr>
-                        <td width="100px" height="30px" style="vertical-align: center; overflow:hidden; ">
+                        <td width="100px" height="30px" style="vertical-align: top; overflow:hidden; ">
                             <div id="cell_103b5c73">
+                                <div class="textstyle1">
+                                    <span class="textstyle2">Influencer</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="100%" height="30px" style="vertical-align: top; overflow:hidden; ">
+                            <div id="cell_103b5c73">
+                                <div class="textstyle1">
+                                    <input type="text" value="" title="" name="snsName" id="edit_7e87c8e1">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100px" height="30px" style="vertical-align: top; overflow:hidden; ">
+                            <div id="cell_2c7116ea">
                                 <div class="textstyle1">
                                     <span class="textstyle2">Date</span>
                                 </div>
@@ -34,7 +51,7 @@
                         <td width="100%" height="30px" style="vertical-align: center; overflow:hidden; ">
                             <div id="cell_2c7116ea">
                                 <div class="textstyle1">
-                                    <input type="text" value="" title="" name="TextEdit1" id="edit_2823f0b8">
+                                    <input type="text" value="" title="" name="snsAt" id="edit_2823f0b8">
                                 </div>
                             </div>
                         </td>
@@ -50,23 +67,44 @@
                         <td width="100%" height="30px" style="vertical-align: center; overflow:hidden; ">
                             <div id="cell_3ecdb7db">
                                 <div class="textstyle1">
-                                    <input type="text" value="" title="" name="TextEdit2" id="edit_53d841d1">
+                                    <table id="table_4f41ecfa" cellpadding="3" cellspacing="1">
+                                        <tr>
+                                            <td width="100%" height="30px"
+                                                style="vertical-align: center; overflow:hidden; ">
+                                                <div id="cell_3b77e554">
+                                                    <div class="textstyle1">
+                                                        <input type="text" value="" title="" name="addressKeyword" id="edit_2e184021">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td width="110px" height="30px"
+                                                style="vertical-align: center; overflow:hidden; ">
+                                                <div id="cell_66e929c9">
+                                                    <div class="textstyle1">
+                                                        <button type="button" id="get-address-button">
+                                                            Get address
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td width="100px" height="30px" style="vertical-align: center; overflow:hidden; ">
+                        <td width="100px" height="60px" style="vertical-align: center; overflow:hidden; ">
                             <div id="cell_6322fe62">
                                 <div class="textstyle1">
                                     <span class="textstyle2">Address</span>
                                 </div>
                             </div>
                         </td>
-                        <td width="100%" height="30px" style="vertical-align: center; overflow:hidden; ">
+                        <td width="100%" height="60px" style="vertical-align: center; overflow:hidden; ">
                             <div id="cell_495230ef">
                                 <div class="textstyle1">
-                                    <input type="text" value="" title="" name="TextEdit3" id="edit_1ce2b571">
+                                    <div id="address-div"></div>
                                 </div>
                             </div>
                         </td>
@@ -88,7 +126,7 @@
                                                 style="vertical-align: center; overflow:hidden; ">
                                                 <div id="cell_27dba1b5">
                                                     <div class="textstyle1">
-                                                        <input type="text" value="" title="" name="TextEdit4" id="edit_145e5370">
+                                                        <input type="text" value="" title="" name="snsUrl" id="edit_145e5370">
                                                     </div>
                                                 </div>
                                             </td>
@@ -96,8 +134,8 @@
                                                 style="vertical-align: center; overflow:hidden; ">
                                                 <div id="cell_b53fb0b">
                                                     <div class="textstyle1">
-                                                        <button type="button" id="get-thumbnails-button">
-                                                            Get thumbnails
+                                                        <button type="button" id="get-thumbnail-button">
+                                                            Get thumbnail
                                                         </button>
                                                     </div>
                                                 </div>
@@ -112,14 +150,14 @@
                         <td width="100px" height="60px" style="vertical-align: center; overflow:hidden; ">
                             <div id="cell_28d8ef31">
                                 <div class="textstyle1">
-                                    <span class="textstyle2">Thumbnails</span>
+                                    <span class="textstyle2">Thumbnail</span>
                                 </div>
                             </div>
                         </td>
                         <td width="100%" height="60px" style="vertical-align: center; overflow:hidden; ">
                             <div id="cell_4f98b62">
                                 <div class="textstyle1">
-                                    <div id="thumbnails-div"></div>
+                                    <div id="thumbnail-div"></div>
                                 </div>
                             </div>
                         </td>
