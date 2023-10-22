@@ -22,6 +22,21 @@ document.getElementById('google')?.addEventListener('click', async function(e){
 
 /*----------------*/
 
+const getAccessToken = () => {
+  const accessToken = localStorage.getItem('access_token');
+  if (accessToken) {
+    const oauthProvider = localStorage.getItem('oauth_provider');
+    if (oauthProvider === 'kakao') {
+      const kakao = document.getElementById('kakao-span') as HTMLDivElement;
+      kakao.innerHTML = '(log in)';
+    } else if (oauthProvider === 'google') {
+      const google = document.getElementById('google-span') as HTMLDivElement;
+      google.innerHTML = '(log in)';
+    }
+  }
+  return accessToken;
+}
+
 const getInputData = () => {
   const snsName = (document.getElementById('edit_7e87c8e1') as HTMLInputElement).value;
   const snsAt = (document.getElementById('edit_2823f0b8') as HTMLInputElement).value;
@@ -35,13 +50,12 @@ const getInputData = () => {
   return { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri };
 }
 
-const registerButton = document.getElementById('button_36e1e858') as HTMLButtonElement;
-registerButton.disabled = true;
 const updateRegisterButton = () => {
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = getAccessToken();
 
   const { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri } = getInputData();
 
+  const registerButton = document.getElementById('button_36e1e858') as HTMLButtonElement;
   registerButton.disabled = !accessToken || !snsName || !snsAt || !restaurantName || !restaurantAddress || !snsUrl || !thumbnailUri;
 }
 
@@ -69,7 +83,7 @@ document.getElementById('edit_2e184021')?.addEventListener('change', async funct
   e.preventDefault();
 
   if (e.target instanceof HTMLInputElement) {
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = getAccessToken();
 
     getAddressButton.disabled = !e.target.value || !accessToken;
   }
@@ -81,7 +95,7 @@ document.getElementById('edit_145e5370')?.addEventListener('change', async funct
   e.preventDefault();
 
   if (e.target instanceof HTMLInputElement) {
-    const accessToken = localStorage.getItem('access_token');
+    const accessToken = getAccessToken();
 
     getThumbnailButton.disabled = !e.target.value || !accessToken;
   }
@@ -123,7 +137,7 @@ const spinkit = `
 document.getElementById('get-address-button')?.addEventListener('click', async function(e){
   e.preventDefault();
 
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = getAccessToken();
   if (!accessToken) console.error('No access_token');
 
   const name = document.getElementById('edit_2e184021') as HTMLInputElement;
@@ -160,7 +174,7 @@ document.getElementById('get-address-button')?.addEventListener('click', async f
 document.getElementById('get-thumbnail-button')?.addEventListener('click', async function(e){
   e.preventDefault();
 
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = getAccessToken();
   if (!accessToken) console.error('No access_token');
 
   const snsLink = document.getElementById('edit_145e5370') as HTMLInputElement;
@@ -212,8 +226,6 @@ if (code) {
     } catch (e) {
     }
 
-    localStorage.removeItem('oauth_provider');
-
     if (request.status == 200) {
       console.log({ ...body });
       localStorage.setItem('access_token', body.access_token);
@@ -236,7 +248,7 @@ if (code) {
 document.getElementById('form_8a90a61')?.addEventListener('submit', async function(e){
   e.preventDefault();
 
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = getAccessToken();
   if (!accessToken) console.error('No access_token');
 
   const { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri } = getInputData();
@@ -263,4 +275,10 @@ document.getElementById('form_8a90a61')?.addEventListener('submit', async functi
   }
 
   alert(response.data);
+
+  // if (response.status >= 200 && response.status < 300) {
+  //   location.reload();
+  // }
 });
+
+updateRegisterButton();
