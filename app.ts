@@ -42,10 +42,25 @@ const getInputData = () => {
   const snsAt = (document.getElementById('edit_2823f0b8') as HTMLInputElement).value;
 
   const restaurantName = (document.getElementById('edit_2e184021') as HTMLInputElement).value;
-  const restaurantAddress = restaurantName ? (document.querySelector('input[name="address"]:checked') as HTMLInputElement).value : undefined;
+  const restaurantAddress = (() => {
+    if (restaurantName) {
+      const radio = document.querySelector('input[name="address"]:checked');
+      if (radio) return (radio as HTMLInputElement).value;
+
+      const input = document.getElementById('edit_44c6c9cc');
+      if (input) return (input as HTMLInputElement).value;
+    }
+    return undefined;
+  })();
 
   const snsUrl = (document.getElementById('edit_145e5370') as HTMLInputElement).value;
-  const thumbnailUri = snsUrl ? (document.querySelector('input[name="thumbnail"]:checked') as HTMLInputElement).value : undefined;
+  const thumbnailUri = (() => {
+    if (snsUrl) {
+      const radio = document.querySelector('input[name="thumbnail"]:checked');
+      if (radio) return (radio as HTMLInputElement).value;
+    }
+    return undefined;
+  })();
 
   return { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri };
 }
@@ -155,11 +170,15 @@ document.getElementById('get-address-button')?.addEventListener('click', async f
   });
 
   if (response.status >= 200 && response.status < 300) {
-    address.innerHTML = response.data.map(
-      ({ address_name }: { address_name: string }) => `<input type="radio" name="address" value="${address_name}" style="width:15px;height:15px;border:1px;" /> ${address_name}`).join('<br>'
-    );
+    if (response.data.length) {
+      address.innerHTML = response.data.map(
+        ({ address_name }: { address_name: string }) => `<input type="radio" name="address" value="${address_name}" style="width:15px;height:15px;border:1px;" /> ${address_name}`).join('<br>'
+      );
 
-    addRadioButtonEventListener('address');
+      addRadioButtonEventListener('address');
+    } else  {
+      address.innerHTML = '<input type="text" value="" title="" name="TextEdit1" id="edit_44c6c9cc" placeholder="검색된 주소가 없습니다. 주소를 직접 입력해 주세요.">';
+    }
   } else {
     if (response.status === 401) {
       localStorage.removeItem('access_token');
