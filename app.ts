@@ -293,7 +293,7 @@ document.getElementById('form_8a90a61')?.addEventListener('submit', async functi
     updateRegisterButton();
   }
 
-  alert(response.data);
+  alert(JSON.stringify(response.data));
 
   // if (response.status >= 200 && response.status < 300) {
   //   location.reload();
