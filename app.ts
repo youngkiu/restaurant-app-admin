@@ -285,7 +285,7 @@ document.getElementById('form_8a90a61')?.addEventListener('submit', async functi
 
   const { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri } = getInputData();
 
-  const data = { snsName, snsAt: moment(snsAt, 'YYYYMMDD').toISOString(), restaurantName, restaurantAddress, snsUrl, thumbnailUri };
+  const data = { snsName, snsAt: moment.utc(snsAt, 'YYYYMMDD').toISOString(), restaurantName, restaurantAddress, snsUrl, thumbnailUri };
   console.log({ ...data });
 
   const response = await axios.post(
