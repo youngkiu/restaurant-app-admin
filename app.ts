@@ -45,10 +45,14 @@ const getInputData = () => {
   const restaurantAddress = (() => {
     if (restaurantName) {
       const radio = document.querySelector('input[name="address"]:checked');
-      if (radio) return (radio as HTMLInputElement).value;
-
       const input = document.getElementById('edit_44c6c9cc');
-      if (input) return (input as HTMLInputElement).value;
+      if (radio) {
+        if ((radio as HTMLInputElement).value !== 'directInput') {
+          return (radio as HTMLInputElement).value;
+        } else if (input) {
+          return (input as HTMLInputElement).value;
+        }
+      }
     }
     return undefined;
   })();
@@ -69,6 +73,7 @@ const updateRegisterButton = () => {
   const accessToken = getAccessToken();
 
   const { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri } = getInputData();
+  console.log({ snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri });
 
   const registerButton = document.getElementById('button_36e1e858') as HTMLButtonElement;
   registerButton.disabled = !accessToken || !snsName || !snsAt || !restaurantName || !restaurantAddress || !snsUrl || !thumbnailUri;
@@ -121,7 +126,7 @@ const addRadioButtonEventListener = (radioButtonName: string) => {
 
   if (radioInputs) {
     for (const radio of radioInputs) {
-      radio.addEventListener("change", function() {
+      radio.addEventListener('change', function() {
         updateRegisterButton();
       });
     }
@@ -171,13 +176,21 @@ document.getElementById('get-address-button')?.addEventListener('click', async f
 
   if (response.status >= 200 && response.status < 300) {
     if (response.data.length) {
-      address.innerHTML = response.data.map(
-        ({ address_name }: { address_name: string }) => `<input type="radio" name="address" value="${address_name}" style="width:15px;height:15px;border:1px;" /> ${address_name}`).join('<br>'
+      const radioAddresses = response.data.map(
+        ({ address_name }: { address_name: string }) => `<input type="radio" name="address" value="${address_name}" style="width:15px;height:15px;border:1px;" /> ${address_name}`
       );
+      radioAddresses.push(
+        '<input type="radio" name="address" value="directInput" style="width:15px;height:15px;border:1px;" />' +
+        '<input type="text" value="" title="" name="TextEdit1" id="edit_44c6c9cc" placeholder="검색된 주소가 없을 경우, 주소를 직접 입력해 주세요.">'
+      );
+      address.innerHTML = radioAddresses.join('<br>');
 
       addRadioButtonEventListener('address');
-    } else  {
-      address.innerHTML = '<input type="text" value="" title="" name="TextEdit1" id="edit_44c6c9cc" placeholder="검색된 주소가 없습니다. 주소를 직접 입력해 주세요.">';
+
+      const directInput = document.getElementById('edit_44c6c9cc');
+      directInput?.addEventListener('change', function() {
+        updateRegisterButton();
+      });
     }
   } else {
     if (response.status === 401) {
@@ -185,7 +198,7 @@ document.getElementById('get-address-button')?.addEventListener('click', async f
       updateRegisterButton();
     }
 
-    alert(response.data);
+    alert(JSON.stringify(response.data));
     address.innerHTML = '';
   }
 });
@@ -222,7 +235,7 @@ document.getElementById('get-thumbnail-button')?.addEventListener('click', async
       updateRegisterButton();
     }
 
-    alert(response.data);
+    alert(JSON.stringify(response.data));
     thumbnail.innerHTML = '';
   }
 });
