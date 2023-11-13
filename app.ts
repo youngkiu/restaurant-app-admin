@@ -277,7 +277,7 @@ if (code) {
   updateRegisterButton();
 }
 
-document.getElementById('button_334a9c15')?.addEventListener('submit', async function(e){
+document.getElementById('button_334a9c15')?.addEventListener('click', async function(e){
   e.preventDefault();
 
   const accessToken = getAccessToken();
