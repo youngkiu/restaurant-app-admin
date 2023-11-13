@@ -38,14 +38,14 @@ const getAccessToken = () => {
 }
 
 const getInputData = () => {
-  const snsName = (document.getElementById('edit_7e87c8e1') as HTMLInputElement).value;
-  const snsAt = (document.getElementById('edit_2823f0b8') as HTMLInputElement).value;
+  const snsName = (document.getElementById('edit_278f0425') as HTMLInputElement).value;
+  const snsAt = (document.getElementById('edit_790e906b') as HTMLInputElement).value;
 
-  const restaurantName = (document.getElementById('edit_2e184021') as HTMLInputElement).value;
+  const restaurantName = (document.getElementById('edit_5f95e7b0') as HTMLInputElement).value;
   const restaurantAddress = (() => {
     if (restaurantName) {
       const radio = document.querySelector('input[name="address"]:checked');
-      const input = document.getElementById('edit_44c6c9cc');
+      const input = document.getElementById('edit_no_address');
       if (radio) {
         if ((radio as HTMLInputElement).value !== 'directInput') {
           return (radio as HTMLInputElement).value;
@@ -57,7 +57,7 @@ const getInputData = () => {
     return undefined;
   })();
 
-  const snsUrl = (document.getElementById('edit_145e5370') as HTMLInputElement).value;
+  const snsUrl = (document.getElementById('edit_72092707') as HTMLInputElement).value;
   const thumbnailUri = (() => {
     if (snsUrl) {
       const radio = document.querySelector('input[name="thumbnail"]:checked');
@@ -75,11 +75,11 @@ const updateRegisterButton = () => {
   const { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri } = getInputData();
   console.log({ snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri });
 
-  const registerButton = document.getElementById('button_36e1e858') as HTMLButtonElement;
+  const registerButton = document.getElementById('button_334a9c15') as HTMLButtonElement;
   registerButton.disabled = !accessToken || !snsName || !snsAt || !restaurantName || !restaurantAddress || !snsUrl || !thumbnailUri;
 }
 
-document.getElementById('edit_7e87c8e1')?.addEventListener('change', async function(e){
+document.getElementById('edit_278f0425')?.addEventListener('change', async function(e){
   e.preventDefault();
 
   if (e.target instanceof HTMLInputElement) {
@@ -87,7 +87,7 @@ document.getElementById('edit_7e87c8e1')?.addEventListener('change', async funct
   }
 });
 
-document.getElementById('edit_2823f0b8')?.addEventListener('change', async function(e){
+document.getElementById('edit_790e906b')?.addEventListener('change', async function(e){
   e.preventDefault();
 
   if (e.target instanceof HTMLInputElement) {
@@ -97,9 +97,9 @@ document.getElementById('edit_2823f0b8')?.addEventListener('change', async funct
 
 /*----------------*/
 
-const getAddressButton = document.getElementById('get-address-button') as HTMLButtonElement;
+const getAddressButton = document.getElementById('button_41d24e3a') as HTMLButtonElement;
 getAddressButton.disabled = true;
-document.getElementById('edit_2e184021')?.addEventListener('change', async function(e){
+document.getElementById('edit_5f95e7b0')?.addEventListener('change', async function(e){
   e.preventDefault();
 
   if (e.target instanceof HTMLInputElement) {
@@ -109,9 +109,9 @@ document.getElementById('edit_2e184021')?.addEventListener('change', async funct
   }
 });
 
-const getThumbnailButton = document.getElementById('get-thumbnail-button') as HTMLButtonElement;
+const getThumbnailButton = document.getElementById('button_909dc1d') as HTMLButtonElement;
 getThumbnailButton.disabled = true;
-document.getElementById('edit_145e5370')?.addEventListener('change', async function(e){
+document.getElementById('edit_72092707')?.addEventListener('change', async function(e){
   e.preventDefault();
 
   if (e.target instanceof HTMLInputElement) {
@@ -154,17 +154,17 @@ const spinkit = `
   </center>
   `;
 
-document.getElementById('get-address-button')?.addEventListener('click', async function(e){
+document.getElementById('button_41d24e3a')?.addEventListener('click', async function(e){
   e.preventDefault();
 
   const accessToken = getAccessToken();
   if (!accessToken) console.error('No access_token');
 
-  const name = document.getElementById('edit_2e184021') as HTMLInputElement;
+  const name = document.getElementById('edit_5f95e7b0') as HTMLInputElement;
   const restaurantName = name.value;
   console.log(restaurantName);
 
-  const address = document.getElementById('address-div') as HTMLDivElement;
+  const address = document.getElementById('container_7d814ca3_padding') as HTMLDivElement;
   address.innerHTML = spinkit;
 
   const response = await axios.post(`${process.env.BACK_END_URL}/place/search`, { keyword: restaurantName }, {
@@ -181,13 +181,13 @@ document.getElementById('get-address-button')?.addEventListener('click', async f
       );
       radioAddresses.push(
         '<input type="radio" name="address" value="directInput" style="width:15px;height:15px;border:1px;" />' +
-        '<input type="text" value="" title="" name="TextEdit1" id="edit_44c6c9cc" placeholder="검색된 주소가 없을 경우, 주소를 직접 입력해 주세요.">'
+        '<input type="text" value="" title="" style="width:90%; height:30px" id="edit_no_address" placeholder="검색된 주소가 없을 경우, 주소를 직접 입력해 주세요.">'
       );
       address.innerHTML = radioAddresses.join('<br>');
 
       addRadioButtonEventListener('address');
 
-      const directInput = document.getElementById('edit_44c6c9cc');
+      const directInput = document.getElementById('edit_no_address');
       directInput?.addEventListener('change', function() {
         updateRegisterButton();
       });
@@ -203,17 +203,17 @@ document.getElementById('get-address-button')?.addEventListener('click', async f
   }
 });
 
-document.getElementById('get-thumbnail-button')?.addEventListener('click', async function(e){
+document.getElementById('button_909dc1d')?.addEventListener('click', async function(e){
   e.preventDefault();
 
   const accessToken = getAccessToken();
   if (!accessToken) console.error('No access_token');
 
-  const snsLink = document.getElementById('edit_145e5370') as HTMLInputElement;
+  const snsLink = document.getElementById('edit_72092707') as HTMLInputElement;
   const snsUrl = snsLink.value;
   console.log(snsUrl);
 
-  const thumbnail = document.getElementById('thumbnail-div') as HTMLDivElement;
+  const thumbnail = document.getElementById('container_3aeaecda_padding') as HTMLDivElement;
   thumbnail.innerHTML = spinkit;
 
   const response = await axios.post(`${process.env.BACK_END_URL}/place/restaurant/thumbnail`, { snsUrl, snsProvider: 'naver' }, {
@@ -277,7 +277,7 @@ if (code) {
   updateRegisterButton();
 }
 
-document.getElementById('form_8a90a61')?.addEventListener('submit', async function(e){
+document.getElementById('button_334a9c15')?.addEventListener('submit', async function(e){
   e.preventDefault();
 
   const accessToken = getAccessToken();
@@ -314,3 +314,58 @@ document.getElementById('form_8a90a61')?.addEventListener('submit', async functi
 });
 
 updateRegisterButton();
+
+const loadHistory = async () => {
+  const accessToken = getAccessToken();
+
+  if (accessToken) {
+    const pageNum = localStorage.getItem('page_num') ?? 1;
+    const pageSize = localStorage.getItem('page_size') ?? 10;
+    console.log({ pageNum, pageSize });
+
+    const response = await axios.get(
+      `${process.env.BACK_END_URL}/place/restaurant/history`,
+      {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        params: {
+          pageNum: +pageNum,
+          pageSize: +pageSize,
+        },
+        validateStatus: () => true
+      }
+    );
+    console.log(response);
+
+    if (response.status >= 200 && response.status < 300) {
+      const history = document.getElementById('container_3bd54410_padding') as HTMLDivElement;
+
+      const restaurants = response.data.map(({ name, createdAt }: { name: string; createdAt: string }) => `<li><u>${name}</u><br>${(new Date(createdAt)).toString().replace(' GMT+0900 (Korean Standard Time)', '')}</li>`);
+
+      history.innerHTML = `${(+pageNum-1) * +pageSize + 1} ~ ${+pageNum * +pageSize}<br><ul>${restaurants.join('')}</ul>`;
+    }
+  }
+}
+
+document.getElementById('button_6fafad2d')?.addEventListener('click', async function(e){
+  e.preventDefault();
+
+  const pageNum = localStorage.getItem('page_num') ?? 1;
+  const prevPageNum = +pageNum - 1;
+  localStorage.setItem('page_num', String(prevPageNum < 1 ? 1 : prevPageNum));
+
+  loadHistory();
+});
+
+document.getElementById('button_60d9bb0d')?.addEventListener('click', async function(e){
+  e.preventDefault();
+
+  const pageNum = localStorage.getItem('page_num') ?? 1;
+  localStorage.setItem('page_num', String(+pageNum + 1));
+
+  loadHistory();
+});
+
+loadHistory();
