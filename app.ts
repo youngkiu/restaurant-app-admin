@@ -277,44 +277,6 @@ if (code) {
   updateRegisterButton();
 }
 
-document.getElementById('button_334a9c15')?.addEventListener('click', async function(e){
-  e.preventDefault();
-
-  const accessToken = getAccessToken();
-  if (!accessToken) console.error('No access_token');
-
-  const { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri } = getInputData();
-
-  const data = { snsName, snsAt: moment.utc(snsAt, 'YYYYMMDD').toISOString(), restaurantName, restaurantAddress, snsUrl, thumbnailUri };
-  console.log({ ...data });
-
-  const response = await axios.post(
-    `${process.env.BACK_END_URL}/place/restaurant`,
-    data,
-    {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      validateStatus: () => true
-    }
-  );
-  console.log(response);
-
-  if (response.status === 401) {
-    localStorage.removeItem('access_token');
-    updateRegisterButton();
-  }
-
-  alert(JSON.stringify(response.data));
-
-  // if (response.status >= 200 && response.status < 300) {
-  //   location.reload();
-  // }
-});
-
-updateRegisterButton();
-
 const loadHistory = async () => {
   const accessToken = getAccessToken();
 
@@ -367,5 +329,45 @@ document.getElementById('button_60d9bb0d')?.addEventListener('click', async func
 
   loadHistory();
 });
+
+document.getElementById('button_334a9c15')?.addEventListener('click', async function(e){
+  e.preventDefault();
+
+  const accessToken = getAccessToken();
+  if (!accessToken) console.error('No access_token');
+
+  const { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri } = getInputData();
+
+  const data = { snsName, snsAt: moment.utc(snsAt, 'YYYYMMDD').toISOString(), restaurantName, restaurantAddress, snsUrl, thumbnailUri };
+  console.log({ ...data });
+
+  const response = await axios.post(
+    `${process.env.BACK_END_URL}/place/restaurant`,
+    data,
+    {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      validateStatus: () => true
+    }
+  );
+  console.log(response);
+
+  if (response.status === 401) {
+    localStorage.removeItem('access_token');
+    updateRegisterButton();
+  }
+
+  alert(JSON.stringify(response.data));
+
+  loadHistory();
+
+  // if (response.status >= 200 && response.status < 300) {
+  //   location.reload();
+  // }
+});
+
+updateRegisterButton();
 
 loadHistory();
