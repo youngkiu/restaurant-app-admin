@@ -342,7 +342,7 @@ const loadHistory = async () => {
     if (response.status >= 200 && response.status < 300) {
       const history = document.getElementById('container_3bd54410_padding') as HTMLDivElement;
 
-      const restaurants = response.data.map(({ name, createdAt }: { name: string; createdAt: string }) => `<li><u>${name}</u><br>${(new Date(createdAt)).toString().replace(' GMT+0900 (Korean Standard Time)', '')}</li>`);
+      const restaurants = response.data.map(({ name, createdAt }: { name: string; createdAt: string }) => `<li><u>${name}</u><br>${(new Date(createdAt)).toString().split('GMT+0900')[0]}</li>`);
 
       history.innerHTML = `${(+pageNum-1) * +pageSize + 1} ~ ${+pageNum * +pageSize}<br><ul>${restaurants.join('')}</ul>`;
     }
