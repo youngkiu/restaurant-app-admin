@@ -158,7 +158,10 @@ document.getElementById('button_41d24e3a')?.addEventListener('click', async func
   e.preventDefault();
 
   const accessToken = getAccessToken();
-  if (!accessToken) console.error('No access_token');
+  if (!accessToken) {
+    console.error('No access_token');
+    return;
+  }
 
   const name = document.getElementById('edit_5f95e7b0') as HTMLInputElement;
   const restaurantName = name.value;
@@ -203,15 +206,43 @@ document.getElementById('button_41d24e3a')?.addEventListener('click', async func
   }
 });
 
+const isRegistered = async (accessToken: string, snsUrl: string) => {
+  const response = await axios.get(
+    `${process.env.BACK_END_URL}/place/restaurant/history`,
+    {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      params: { snsUrl },
+      validateStatus: () => true
+    }
+  );
+  console.log(response);
+
+  if (response.status >= 200 && response.status < 300) {
+    return !!response.data.length;
+  }
+  return false;
+}
+
 document.getElementById('button_909dc1d')?.addEventListener('click', async function(e){
   e.preventDefault();
 
   const accessToken = getAccessToken();
-  if (!accessToken) console.error('No access_token');
+  if (!accessToken) {
+    console.error('No access_token');
+    return;
+  }
 
   const snsLink = document.getElementById('edit_72092707') as HTMLInputElement;
   const snsUrl = snsLink.value;
   console.log(snsUrl);
+
+  if (await isRegistered(accessToken, snsUrl)) {
+    alert('Already Registered');
+    return;
+  }
 
   const thumbnail = document.getElementById('container_3aeaecda_padding') as HTMLDivElement;
   thumbnail.innerHTML = spinkit;
@@ -334,7 +365,10 @@ document.getElementById('button_334a9c15')?.addEventListener('click', async func
   e.preventDefault();
 
   const accessToken = getAccessToken();
-  if (!accessToken) console.error('No access_token');
+  if (!accessToken) {
+    console.error('No access_token');
+    return;
+  }
 
   const { snsName, snsAt, restaurantName, restaurantAddress, snsUrl, thumbnailUri } = getInputData();
 
