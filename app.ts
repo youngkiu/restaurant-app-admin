@@ -338,6 +338,9 @@ const loadHistory = async () => {
       const restaurants = response.data.map(({ name, createdAt }: { name: string; createdAt: string }) => `<li><u>${name}</u><br>${(new Date(createdAt)).toString().split('GMT+0900')[0]}</li>`);
 
       history.innerHTML = `${(+pageNum-1) * +pageSize + 1} ~ ${+pageNum * +pageSize}<br><ul>${restaurants.join('')}</ul>`;
+    } else if (response.status === 401) {
+      localStorage.removeItem('access_token');
+      updateRegisterButton();
     }
   }
 }
