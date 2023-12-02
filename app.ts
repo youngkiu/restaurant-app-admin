@@ -37,6 +37,17 @@ const getAccessToken = () => {
   return accessToken;
 }
 
+const removeAccessToken = () => {
+  localStorage.removeItem('access_token');
+
+  const kakao = document.getElementById('kakao-span') as HTMLDivElement;
+  kakao.innerHTML = '';
+  const google = document.getElementById('google-span') as HTMLDivElement;
+  google.innerHTML = '';
+
+  updateRegisterButton();
+}
+
 const getInputData = () => {
   const snsName = (document.getElementById('edit_278f0425') as HTMLInputElement).value;
   const snsAt = (document.getElementById('edit_790e906b') as HTMLInputElement).value;
@@ -197,8 +208,7 @@ document.getElementById('button_41d24e3a')?.addEventListener('click', async func
     }
   } else {
     if (response.status === 401) {
-      localStorage.removeItem('access_token');
-      updateRegisterButton();
+      removeAccessToken();
     }
 
     alert(JSON.stringify(response.data));
@@ -262,8 +272,7 @@ document.getElementById('button_909dc1d')?.addEventListener('click', async funct
     addRadioButtonEventListener('thumbnail');
   } else {
     if (response.status === 401) {
-      localStorage.removeItem('access_token');
-      updateRegisterButton();
+      removeAccessToken();
     }
 
     alert(JSON.stringify(response.data));
@@ -339,8 +348,7 @@ const loadHistory = async () => {
 
       history.innerHTML = `${(+pageNum-1) * +pageSize + 1} ~ ${+pageNum * +pageSize}<br><ul>${restaurants.join('')}</ul>`;
     } else if (response.status === 401) {
-      localStorage.removeItem('access_token');
-      updateRegisterButton();
+      removeAccessToken();
     }
   }
 }
@@ -392,8 +400,7 @@ document.getElementById('button_334a9c15')?.addEventListener('click', async func
   console.log(response);
 
   if (response.status === 401) {
-    localStorage.removeItem('access_token');
-    updateRegisterButton();
+    removeAccessToken();
   }
 
   alert(JSON.stringify(response.data));
