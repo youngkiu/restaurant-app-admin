@@ -301,6 +301,8 @@ if (code) {
     if (request.status == 200) {
       console.log({ ...body });
       localStorage.setItem('access_token', body.access_token);
+
+      loadHistory();
     } else {
       console.error(request, body);
     }
