@@ -218,7 +218,7 @@ document.getElementById('button_41d24e3a')?.addEventListener('click', async func
 
 const isRegistered = async (accessToken: string, snsUrl: string) => {
   const response = await axios.get(
-    `${process.env.BACK_END_URL}/place/restaurant/history`,
+    `${process.env.BACK_END_URL}/place/restaurant`,
     {
       headers: {
         authorization: `Bearer ${accessToken}`,
@@ -328,7 +328,7 @@ const loadHistory = async () => {
     console.log({ pageNum, pageSize });
 
     const response = await axios.get(
-      `${process.env.BACK_END_URL}/place/restaurant/history`,
+      `${process.env.BACK_END_URL}/place/restaurant`,
       {
         headers: {
           authorization: `Bearer ${accessToken}`,
