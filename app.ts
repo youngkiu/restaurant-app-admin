@@ -181,10 +181,8 @@ document.getElementById('button_41d24e3a')?.addEventListener('click', async func
   const address = document.getElementById('container_7d814ca3_padding') as HTMLDivElement;
   address.innerHTML = spinkit;
 
-  const response = await axios.post(`${process.env.BACK_END_URL}/place/search`, { keyword: restaurantName }, {
-    headers: {
-      authorization: `Bearer ${accessToken}`
-    },
+  const response = await axios.get(`${process.env.BACK_END_URL}/place/search`, {
+    params: { keyword: restaurantName },
     validateStatus: () => true
   });
 
