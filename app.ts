@@ -255,7 +255,7 @@ document.getElementById('button_909dc1d')?.addEventListener('click', async funct
   const thumbnail = document.getElementById('container_3aeaecda_padding') as HTMLDivElement;
   thumbnail.innerHTML = spinkit;
 
-  const response = await axios.post(`${process.env.BACK_END_URL}/place/restaurant/thumbnail`, { snsUrl, snsProvider: 'naver' }, {
+  const response = await axios.post(`${process.env.BACK_END_URL}/place/restaurant/thumbnail`, { snsUrl }, {
     headers: {
       authorization: `Bearer ${accessToken}`
     },
