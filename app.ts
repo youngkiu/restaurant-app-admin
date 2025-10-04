@@ -89,6 +89,14 @@ const updateRegisterButton = () => {
   registerButton.disabled = !accessToken || !snsName || !snsAt || !restaurantName || !restaurantAddress || !snsUrl || !thumbnailUri;
 }
 
+const resetThumbnailSelection = () => {
+  const checkedThumbnail = document.querySelector('input[name="thumbnail"]:checked') as HTMLInputElement | null;
+  if (checkedThumbnail) {
+    checkedThumbnail.checked = false;
+  }
+  updateRegisterButton();
+}
+
 document.getElementById('edit_278f0425')?.addEventListener('change', async function(e){
   e.preventDefault();
 
@@ -128,6 +136,8 @@ document.getElementById('edit_72092707')?.addEventListener('change', async funct
     const accessToken = getAccessToken();
 
     getThumbnailButton.disabled = !e.target.value || !accessToken;
+
+    resetThumbnailSelection();
   }
 });
 
@@ -246,6 +256,8 @@ document.getElementById('button_909dc1d')?.addEventListener('click', async funct
   const snsUrl = snsLink.value;
   console.log(snsUrl);
 
+  resetThumbnailSelection();
+
   if (await isRegistered(accessToken, snsUrl)) {
     alert('Already Registered');
     return;
@@ -267,6 +279,8 @@ document.getElementById('button_909dc1d')?.addEventListener('click', async funct
     );
 
     addRadioButtonEventListener('thumbnail');
+
+    updateRegisterButton();
   } else {
     if (response.status === 401) {
       removeAccessToken();
@@ -274,6 +288,8 @@ document.getElementById('button_909dc1d')?.addEventListener('click', async funct
 
     alert(JSON.stringify(response.data));
     thumbnail.innerHTML = '';
+
+    updateRegisterButton();
   }
 });
 
